@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="popup.css" />
+    <title>Screen Recorder</title>
+  </head>
+  <body>
+    <div class="popup" id="popup">
+      <span class="logodiv">
+        <img src="/images/helplogo.png" />
+        <small>
+          <img src="/images/setting-2.png" />
+          <img id="close" src="/images/close-circle.png" />
+        </small>
+      </span>
+      <p class="text">This extension helps you record and share help videos with ease.</p>
+      <div class="tabs">
+        <span>
+          <img src="/images/monitor.png" />
+          <p>Full screen</p>
+        </span>
+        <span>
+          <img src="/images/copy.png" />
+          <p>Current Tab</p>
+        </span>
+      </div>
+      <div class="options">
+        <span>
+          <img src="/images/video-camera.png" />
+          <p>Camera</p>
+        </span>
+        <img src="/images/toggle.png" />
+        <!-- <input type="checkbox" /> -->
+      </div>
+      <div class="options">
+        <span>
+          <img src="/images/mic.png" />
+          <p>Audio</p>
+        </span>
+        <img src="/images/toggle.png" />
+        <!-- <input type="checkbox" /> -->
+      </div>
+
+      <button id="start-vid" class="record-btn">Start Recording</button>
+      <button id="stop-vid">Stop Video</button>
+    </div>
+
+    <script src="./js/popup.js"></script>
+  </body>
+</html>

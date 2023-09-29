@@ -1,0 +1,86 @@
+*{
+    margin: 0;
+    /* padding: 0; */
+    box-sizing: border-box;
+}
+
+.popup {
+  width: 300px;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 8px gray;
+  margin: auto;
+}
+
+p {
+  text-align: center;
+  font-size: 1rem;
+}
+
+.text{
+    width: 90%;
+    text-align: left;
+    font-size: .9rem;
+}
+
+.logodiv {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.logodiv small {
+  display: flex;
+  gap: 15px;
+}
+
+.logodiv small img{
+    cursor: pointer;
+}
+
+.tabs {
+  display: flex;
+  justify-content: space-around;
+  margin: 2rem 0;
+}
+
+.tabs span {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid black;
+  padding: 15px 10px;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.options img{
+    cursor: pointer;
+}
+
+.options span {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.record-btn {
+  display: block;
+  width: 100%;
+  padding: 15px 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  background-color: #120B48;
+  color: white;
+}

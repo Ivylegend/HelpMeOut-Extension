@@ -19,7 +19,7 @@ function onAccessApproved(stream) {
     console.log(recordedBlob);
 
     var formdata = new FormData();
-    formdata.append("video", recordedBlob);
+    formdata.append("file", recordedBlob);
 
     let url = URL.createObjectURL(recordedBlob);
     console.log(url);
@@ -49,27 +49,27 @@ function onAccessApproved(stream) {
       } catch (error) {
         console.log("error", error);
       }
-      // window.location.assign(
-      //   "https://help-me-out.netlify.app/file/video_id",
-      //   "_blank"
-      // );
+      window.location.assign(
+        "https://help-me-out.netlify.app/file/video_id",
+        "_blank"
+      );
     };
 
     sendBlob();
 
     // LINK /////////////////////////////////
-    let a = document.createElement("a");
-    a.style.display = "none";
-    a.href = url;
-    a.download = `${url}.mp4`;
-    a.target = "_blank";
+    // let a = document.createElement("a");
+    // a.style.display = "none";
+    // a.href = url;
+    // a.download = `${url}.mp4`;
+    // a.target = "_blank";
 
-    document.body.appendChild(a);
-    a.click();
+    // document.body.appendChild(a);
+    // a.click();
 
-    document.body.removeChild(a);
+    // document.body.removeChild(a);
 
-    URL.revokeObjectURL(url);
+    // URL.revokeObjectURL(url);
   };
 }
 

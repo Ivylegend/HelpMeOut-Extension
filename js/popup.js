@@ -1,8 +1,8 @@
-document.addEventListener("DOMContentLoaded", () => {
+// document.addEventListener("DOMContentLoaded", () => {
   // GET THE SELECTORS OF THE BUTTONS
   const startVid = document.querySelector("button#start-vid");
   const stopVid = document.querySelector("button#stop-vid");
-  // const popup = document.querySelector("#popup");
+  const popup = document.querySelector("#popup");
   // const closePopup = document.querySelector("#close");
 
   //   ADDING EVENT LISTENERS
@@ -41,5 +41,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       );
     });
+    popup.style.display = "none";
   });
-});
+// });

@@ -1,65 +1,80 @@
 console.log("been injected");
 
-var recorder = null; 
-function onAccessApproved(stream){
-    recorder = new MediaRecorder(stream);
+var recorder = null;
+function onAccessApproved(stream) {
+  recorder = new MediaRecorder(stream);
 
-    recorder.start();
+  recorder.start();
 
-    recorder.onstop = function (){
-        stream.getTracks().forEach(function(track){
-            if(track.readyState === "Live"){
-                track.stop()
-            }
-        })
-    }
+  recorder.onstop = function () {
+    stream.getTracks().forEach(function (track) {
+      if (track.readyState === "Live") {
+        track.stop();
+      }
+    });
+  };
 
-    recorder.ondataavailable = function(event){
-        let recordedBlob = event.data;
+  recorder.ondataavailable = function (event) {
+    let recordedBlob = event.data;
+    var formdata = new FormData();
+    formdata.append("video", recordedBlob, "https://backendchromeextention.onrender.com/upload")
 
-        let url = URL.createObjectURL(recordedBlob);
+    let url = URL.createObjectURL(recordedBlob);
+    console.log(url);
 
-        console.log(url);
+    // STUFFS I JUST ADDED
+    var requestOptions = {
+      method: "POST",
+      body: formdata,
+      redirect: "follow",
+    };
 
-        let a = document.createElement("a");
+    fetch("https://backendchromeextention.onrender.com/upload", requestOptions)
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.log("error", error));
 
-        a.style.display = "none";
-        a.href = url;
-        a.download = "screen-recording.webm"
+    // LINK
+    let a = document.createElement("a");
+    a.style.display = "none";
+    a.href = url;
+    a.download = `${url}.mp4`;
+    a.target = "_blank";
 
-        document.body.appendChild(a);
-        a.click();
+    document.body.appendChild(a);
+    a.click();
 
-        document.body.removeChild(a);
+    document.body.removeChild(a);
 
-        URL.revokeObjectURL(url);
-    }
+    URL.revokeObjectURL(url);
+    window.location.assign("https://help-me-out.netlify.app/file/video_id");
+  };
 }
 
-chrome.runtime.onMessage.addListener((message, sender, sendResponse)=>{
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.action === "request_recording") {
+    console.log("requesting recording");
 
-    if(message.action === "request_recording"){
-        console.log("requesting recording")
+    sendResponse(`seen ${message.action}`);
 
-        sendResponse(`seen ${message.action}`);
+    navigator.mediaDevices
+      .getDisplayMedia({
+        audio: true,
+        video: {
+          width: 9999999999,
+          height: 9999999999,
+        },
+      })
+      .then((stream) => {
+        onAccessApproved(stream);
+      });
+  }
 
-        navigator.mediaDevices.getDisplayMedia({
-            audio: true,
-            video: {
-                width: 9999999999,
-                height: 9999999999
-            }
-        }).then((stream)=> {
-            onAccessApproved(stream)
-        })
-    }
+  if (message.action === "stopVideo") {
+    console.log("stopping video");
+    sendResponse(`seen ${message.action}`);
+    if (!recorder) return console.log("no recorder");
 
-    if(message.action === "stopVideo"){
-        console.log("stopping video");
-        sendResponse(`seen ${message.action}`);
-        if(!recorder) return console.log("no recorder");
-
-        recorder.stop();
-    }
-
-})
+    recorder.stop();
+  }
+});

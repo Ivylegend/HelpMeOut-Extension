@@ -16,8 +16,10 @@ function onAccessApproved(stream) {
 
   recorder.ondataavailable = function (event) {
     let recordedBlob = event.data;
+    console.log(recordedBlob);
+
     var formdata = new FormData();
-    formdata.append("video", recordedBlob, "https://backendchromeextention.onrender.com/upload")
+    formdata.append("video", recordedBlob);
 
     let url = URL.createObjectURL(recordedBlob);
     console.log(url);
@@ -29,12 +31,33 @@ function onAccessApproved(stream) {
       redirect: "follow",
     };
 
-    fetch("https://backendchromeextention.onrender.com/upload", requestOptions)
-      .then((response) => response.text())
-      .then((result) => console.log(result))
-      .catch((error) => console.log("error", error));
+    /////////////////////////////
+    // SENDING BLOB
+    /////////////////////////
+    const sendBlob = async () => {
+      try {
+        const dataFetch = await fetch(
+          "https://help-me-out-extension.onrender.com/uploads",
+          requestOptions
+        );
 
-    // LINK
+        const detail = await dataFetch.json();
+
+        console.log(detail);
+
+        console.log(detail.videoUrl + " returned...");
+      } catch (error) {
+        console.log("error", error);
+      }
+      // window.location.assign(
+      //   "https://help-me-out.netlify.app/file/video_id",
+      //   "_blank"
+      // );
+    };
+
+    sendBlob();
+
+    // LINK /////////////////////////////////
     let a = document.createElement("a");
     a.style.display = "none";
     a.href = url;
@@ -47,7 +70,6 @@ function onAccessApproved(stream) {
     document.body.removeChild(a);
 
     URL.revokeObjectURL(url);
-    window.location.assign("https://help-me-out.netlify.app/file/video_id");
   };
 }
 
